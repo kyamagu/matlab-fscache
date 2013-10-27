@@ -12,7 +12,7 @@ function root_dir = root(root_dir)
 % See also fscache
   persistent root_dir_;
   if isempty(root_dir_)
-    root_dir_ = '';
+    root_dir_ = 'tmp';
   end
   if nargin > 0
     if ~ischar(root_dir)
