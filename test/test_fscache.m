@@ -5,11 +5,13 @@ function test_fscache
   test1();
   fscache.hash(false);
   test1();
+  fscache.hash(@(x)x(1:min(2, numel(x))));
+  test1();
   fscache.hash(current_hash);
 end
 
 function status = test1()
-%TEST_PUTEXISTGETDELETE
+%TEST1
   status = true;
   try
     fscache.put('my_pets', 'bow', struct('type', 'dog', 'age', 2));
@@ -20,7 +22,6 @@ function status = test1()
     assert(isstruct(bow) && isscalar(bow));
     fscache.delete('my_pets', 'chi');
     assert(isempty(fscache.get('my_pets', 'chi')));
-    keys = fscache.keys('my_pets');
     map = fscache.export('my_pets');
     fscache.clear('my_pets');
     fscache.import('my_pets', map);
