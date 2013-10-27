@@ -1,10 +1,10 @@
 FSCACHE
 =======
 
-File-system based cache for Matlab struct arrays. It implements a key-value
-persistent storage using Matlab's built-in `load` and `save` functions. It does
-not offer the best performance compared to a key-value database system, but
-works in any platform supported by Matlab.
+File-system based cache for Matlab values. It implements a key-value persistent
+storage using Matlab's built-in `load` and `save` functions. It does not offer
+the best performance compared to a key-value database system, but works in any
+platform supported by Matlab.
 
 API
 ---

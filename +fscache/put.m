@@ -1,4 +1,4 @@
-function put(name, key, value, varargin)
+function put(name, key, value)
 %PUT Put a value.
 %
 %    fscache.put(name, key, value)
@@ -7,12 +7,9 @@ function put(name, key, value, varargin)
 %
 % See also fscache
   error(nargchk(3, inf, nargin, 'struct'));
-  if ~isstruct(value) || ~isscalar(value)
-    error('value must be a scalar struct: %s', class(value));
-  end
   filename = fscache.getFilePath(name, key);
   if ~exist(fileparts(filename), 'dir')
     mkdir(fileparts(filename));
   end
-  save(filename, '-struct', 'value', varargin{:});
+  save(filename, 'value');
 end

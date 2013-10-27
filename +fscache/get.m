@@ -1,4 +1,4 @@
-function value = get(name, key, varargin)
+function value = get(name, key)
 %GET Get a value.
 %
 %    value = fscache.get(name, key)
@@ -12,6 +12,7 @@ function value = get(name, key, varargin)
   if ~exist(filename, 'file')
     value = [];
   else
-    value = load(filename, varargin{:});
+    value = load(filename);
+    value = value.value;
   end
 end
