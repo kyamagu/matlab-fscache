@@ -6,7 +6,7 @@ function list = keys(name)
 % FACACHE.KEYS returns keys of existing entries in a collection NAME.
 %
 % See also fscache
-  if fscache.hash
+  if ~isempty(feval(fscache.hash, ''))
     list = textscan(ls(fullfile(fscache.root, name, '*', '*.mat')), '%s');
     list = regexprep(list{1}', '^.*/(.*)\.mat$', '$1');
   else

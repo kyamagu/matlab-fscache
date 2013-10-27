@@ -1,24 +1,45 @@
-function flag = hash(flag)
-%HASH Set/get a flag to add a hash to the file path.
+function value = hash(hash_function)
+%HASH Set/get a hash function.
 %
-% To enable/disable:
+%     fscache.hash(hash_function)
+%     hash_function = fscache.hash()
 %
-%    fscache.hash('/path/to/cache')
+% FSCACHE.HASH returns a hash function used by the FSCACHE library. A hash
+% function must take a single string argument and also return a string.
+% The function can also accept a scalar logical value. When `true` is given,
+% FSCACHE.HASH resets the hash function to default. When `false` is given,
+% FSCACHE.HASH disables a hash functionarity in FSCACHE library.
 %
-% To disable:
+% Example:
 %
-%    fscache.root()
+%    fscache.hash(false); % Disable hash.
+%    fscache.hash(true);  % Reset to default.
+%    fscache.hash(@(x)x(1:min(2, numel(x)))); % Custom hash function.
+%    hash_value = feval(fscache.hash, 'foo');
 %
-% See also fscache
-  persistent flag_;
-  if isempty(flag_)
-    flag_ = true;
+% See also fscache feval
+  persistent hash_function_;
+  if isnumeric(hash_function_) && isempty(hash_function_)
+    hash_function_ = @default_hash;
   end
   if nargin > 0
-    if ~isscalar(flag)
-      error('flag must be a scalar logical: %s', class(flag));
+    if isa(hash_function, 'function_handle')
+      hash_function_ = hash_function;
+    elseif islogical(hash_function) && isscalar(hash_function)
+      if hash_function
+        hash_function_ = @default_hash;
+      else
+        hash_function_ = @(key) '';
+      end
+    else
+      error('hash_function must be a logical or a handle: %s', ...
+            class(hash_function));
     end
-    flag_ = logical(flag);
   end
-  flag = flag_;
+  value = hash_function_;
+end
+
+function value = default_hash(key)
+%DEFAULT_HASH Default hash function.
+  value = sprintf('%02x', bitand(java.lang.String(key).hashCode(), 255));
 end

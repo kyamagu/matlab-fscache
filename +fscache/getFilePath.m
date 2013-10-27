@@ -12,11 +12,8 @@ function filepath = getFilePath(name, key)
   elseif ~ischar(key)
     error('key must be a string or a scalar numeric value: %s', class(key));
   end
-
-  if fscache.hash
-    hash = sprintf('%02x', bitand(java.lang.String(key).hashCode(), 255));
-    filepath = fullfile(fscache.root, name, hash, [key, '.mat']);
-  else
-    filepath = fullfile(fscache.root, name, [key, '.mat']);
-  end
+  filepath = fullfile(fscache.root, ...
+                      name, ...
+                      feval(fscache.hash, key), ...
+                      [key, '.mat']);
 end

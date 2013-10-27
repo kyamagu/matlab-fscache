@@ -1,5 +1,5 @@
 function root_dir = root(root_dir)
-%ROOT Root directory for fscache.
+%ROOT Set/get a root directory for fscache.
 %
 % To set a cache directory:
 %
