@@ -12,7 +12,6 @@ function value = get(name, key)
   if ~exist(filename, 'file')
     value = [];
   else
-    value = load(filename);
-    value = value.value;
+    load(filename, 'value');
   end
 end
