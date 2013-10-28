@@ -41,5 +41,6 @@ end
 
 function value = default_hash(key)
 %DEFAULT_HASH Default hash function.
-  value = sprintf('%02x', bitand(java.lang.String(key).hashCode(), 255));
+  value = sprintf('%02x', bitand(uint64(java.lang.String(key).hashCode()), ...
+                                 uint64(255)));
 end
